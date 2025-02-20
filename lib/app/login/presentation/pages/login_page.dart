@@ -50,7 +50,7 @@ class FooterLoginWidget extends StatelessWidget {
 }
 
 class BodyLoginWidget extends StatefulWidget {
-  BodyLoginWidget({super.key});
+  const BodyLoginWidget({super.key});
 
   @override
   State<BodyLoginWidget> createState() => _BodyLoginWidgetState();
@@ -58,6 +58,20 @@ class BodyLoginWidget extends StatefulWidget {
 
 class _BodyLoginWidgetState extends State<BodyLoginWidget> {
   bool showPassword = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      showPassword = !showPassword;
+    });
+
+    if (showPassword) {
+      Future.delayed(Duration(seconds: 5), () {
+        setState(() {
+          showPassword = false;
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +99,7 @@ class _BodyLoginWidgetState extends State<BodyLoginWidget> {
                 icon: Icon(Icons.lock),
                 hintText: "Escriba su contraseña",
                 suffixIcon: GestureDetector(
-                  onTap:
-                      () => setState(() {
-                        showPassword = !showPassword;
-                      }),
+                  onTap: _togglePasswordVisibility,
                   child: Icon(
                     showPassword ? Icons.visibility : Icons.visibility_off,
                   ),

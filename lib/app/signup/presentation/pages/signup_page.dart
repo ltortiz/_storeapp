@@ -20,8 +20,6 @@ class BodySignUpWidget extends StatefulWidget {
 }
 
 class _BodySignUpWidgetState extends State<BodySignUpWidget> {
-  final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,14 +28,58 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
   final TextEditingController _photoUrlController = TextEditingController();
 
   String _photoUrl = "";
+  String _nameError = "";
+  String _emailError = "";
+  String _passwordError = "";
+  String _confirmPasswordError = "";
+  String _photoUrlError = "";
 
   void _register() {
-    if (_formKey.currentState!.validate()) {
-      // Aquí puedes manejar el registro, como enviar los datos al backend
-      print("Nombre: ${_nameController.text}");
-      print("Correo: ${_emailController.text}");
-      print("Imagen URL: ${_photoUrlController.text}");
-    }
+    setState(() {
+      // Reiniciar errores antes de validar
+      _nameError = "";
+      _emailError = "";
+      _passwordError = "";
+      _confirmPasswordError = "";
+      _photoUrlError = "";
+
+      // Validaciones
+      if (_nameController.text.isEmpty) {
+        _nameError = "El nombre es obligatorio.";
+      }
+      if (_emailController.text.isEmpty) {
+        _emailError = "El correo es obligatorio.";
+      } else if (!RegExp(
+        r'^[^@]+@[^@]+\.[^@]+',
+      ).hasMatch(_emailController.text)) {
+        _emailError = "Ingrese un correo válido.";
+      }
+      if (_passwordController.text.isEmpty) {
+        _passwordError = "La contraseña es obligatoria.";
+      } else if (_passwordController.text.length < 6) {
+        _passwordError = "Debe tener al menos 6 caracteres.";
+      }
+      if (_confirmPasswordController.text.isEmpty) {
+        _confirmPasswordError = "Confirme la contraseña.";
+      } else if (_confirmPasswordController.text != _passwordController.text) {
+        _confirmPasswordError = "Las contraseñas no coinciden.";
+      }
+      if (_photoUrlController.text.isEmpty) {
+        _photoUrlError = "Ingrese la URL de la imagen.";
+      }
+
+      // Si no hay errores, mostrar éxito
+      if (_nameError.isEmpty &&
+          _emailError.isEmpty &&
+          _passwordError.isEmpty &&
+          _confirmPasswordError.isEmpty &&
+          _photoUrlError.isEmpty) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Registro exitoso!!!")));
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -64,14 +106,9 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
                   labelText: "Nombre",
                   icon: Icon(Icons.person),
                   hintText: "Escriba su nombre",
+                  errorText: _nameError.isNotEmpty ? _nameError : null,
                 ),
                 keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "El nombre es obligatorio";
-                  }
-                  return null;
-                },
               ),
               TextFormField(
                 controller: _emailController,
@@ -79,16 +116,9 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
                   labelText: "Correo electrónico",
                   icon: Icon(Icons.email),
                   hintText: "Escriba su correo",
+                  errorText: _emailError.isNotEmpty ? _emailError : null,
                 ),
                 keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "El correo es obligatorio";
-                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return "Ingrese un correo válido";
-                  }
-                  return null;
-                },
               ),
               TextFormField(
                 controller: _passwordController,
@@ -96,15 +126,10 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
                   labelText: "Contraseña",
                   icon: Icon(Icons.lock),
                   hintText: "Escriba su contraseña",
+                  errorText: _passwordError.isNotEmpty ? _passwordError : null,
                 ),
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                validator: (value) {
-                  if (value == null || value.length < 6) {
-                    return "La contraseña debe tener al menos 6 caracteres";
-                  }
-                  return null;
-                },
               ),
               TextFormField(
                 controller: _confirmPasswordController,
@@ -112,15 +137,13 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
                   labelText: "Confirmar Contraseña",
                   icon: Icon(Icons.password),
                   hintText: "Repita su contraseña",
+                  errorText:
+                      _confirmPasswordError.isNotEmpty
+                          ? _confirmPasswordError
+                          : null,
                 ),
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return "Las contraseñas no coinciden";
-                  }
-                  return null;
-                },
               ),
               TextFormField(
                 controller: _photoUrlController,
@@ -128,13 +151,8 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
                   labelText: "Foto",
                   icon: Icon(Icons.photo),
                   hintText: "Escriba la url de su foto",
+                  errorText: _photoUrlError.isNotEmpty ? _photoUrlError : null,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Ingrese la URL de la foto";
-                  }
-                  return null;
-                },
               ),
               SizedBox(height: 20),
               Center(

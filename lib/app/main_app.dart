@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storeapp/app/home/presentation/pages/home_page.dart';
 import 'package:storeapp/app/login/presentation/pages/login_page.dart';
 import 'package:storeapp/app/signup/presentation/pages/signup_page.dart';
 
@@ -17,10 +18,11 @@ class MainApp extends StatelessWidget {
           name: "sign-up",
         ),
         GoRoute(
-          path: "/profile",
-          builder: (_, _) => SignUpPage(),
-          name: "profile",
+          path: "/home",
+          builder: (_, _) => HomePage(),
+          name: "home",
         ),
+        
       ],
     );
     return SafeArea(child: MaterialApp.router(routerConfig: router));

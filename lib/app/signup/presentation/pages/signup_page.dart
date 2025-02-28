@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -56,8 +55,8 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
       }
       if (_passwordController.text.isEmpty) {
         _passwordError = "La contraseña es obligatoria.";
-      } else if (_passwordController.text.length < 6) {
-        _passwordError = "Debe tener al menos 6 caracteres.";
+      } else if (_passwordController.text.length < 8) {
+        _passwordError = "Debe tener al menos 8 caracteres.";
       }
       if (_confirmPasswordController.text.isEmpty) {
         _confirmPasswordError = "Confirme la contraseña.";
@@ -98,105 +97,108 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> {
       child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(right: 32.0, left: 32.0, top: 48.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: "Nombre",
-                  icon: Icon(Icons.person),
-                  hintText: "Escriba su nombre",
-                  errorText: _nameError.isNotEmpty ? _nameError : null,
-                ),
-                keyboardType: TextInputType.name,
-              ),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: "Correo electrónico",
-                  icon: Icon(Icons.email),
-                  hintText: "Escriba su correo",
-                  errorText: _emailError.isNotEmpty ? _emailError : null,
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: "Contraseña",
-                  icon: Icon(Icons.lock),
-                  hintText: "Escriba su contraseña",
-                  errorText: _passwordError.isNotEmpty ? _passwordError : null,
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-              ),
-              TextFormField(
-                controller: _confirmPasswordController,
-                decoration: InputDecoration(
-                  labelText: "Confirmar Contraseña",
-                  icon: Icon(Icons.password),
-                  hintText: "Repita su contraseña",
-                  errorText:
-                      _confirmPasswordError.isNotEmpty
-                          ? _confirmPasswordError
-                          : null,
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-              ),
-              TextFormField(
-                controller: _photoUrlController,
-                decoration: InputDecoration(
-                  labelText: "Foto",
-                  icon: Icon(Icons.photo),
-                  hintText: "Escriba la url de su foto",
-                  errorText: _photoUrlError.isNotEmpty ? _photoUrlError : null,
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child:
-                    _photoUrl.isNotEmpty
-                        ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            _photoUrl,
-                            width: 150,
-                            height: 150,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Icon(
-                                Icons.image_not_supported,
-                                size: 80,
-                                color: Colors.grey,
-                              );
-                            },
-                          ),
-                        )
-                        : Icon(Icons.image, size: 80, color: Colors.grey),
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("Volver"),
-                    ),
+          child: Form(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: "Nombre",
+                    icon: Icon(Icons.person),
+                    hintText: "Escriba su nombre",
+                    errorText: _nameError.isNotEmpty ? _nameError : null,
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: _register,
-                      child: Text("Registrar"),
-                    ),
+                  keyboardType: TextInputType.name,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: "Correo electrónico",
+                    icon: Icon(Icons.email),
+                    hintText: "Escriba su correo",
+                    errorText: _emailError.isNotEmpty ? _emailError : null,
                   ),
-                ],
-              ),
-            ],
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: "Contraseña",
+                    icon: Icon(Icons.lock),
+                    hintText: "Escriba su contraseña",
+                    errorText: _passwordError.isNotEmpty ? _passwordError : null,
+                  ),
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                ),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  decoration: InputDecoration(
+                    labelText: "Confirmar Contraseña",
+                    icon: Icon(Icons.password),
+                    hintText: "Repita su contraseña",
+                    errorText:
+                        _confirmPasswordError.isNotEmpty
+                            ? _confirmPasswordError
+                            : null,
+                  ),
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                ),
+                TextFormField(
+                  controller: _photoUrlController,
+                  decoration: InputDecoration(
+                    labelText: "Foto",
+                    icon: Icon(Icons.photo),
+                    hintText: "Escriba la url de su foto",
+                    errorText: _photoUrlError.isNotEmpty ? _photoUrlError : null,
+                  ),
+                  keyboardType: TextInputType.url,
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child:
+                      _photoUrl.isNotEmpty
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              _photoUrl,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.image_not_supported,
+                                  size: 80,
+                                  color: Colors.grey,
+                                );
+                              },
+                            ),
+                          )
+                          : Icon(Icons.image, size: 80, color: Colors.grey),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Volver"),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: _register,
+                        child: Text("Registrar"),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

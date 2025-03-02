@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "204008202821",
+    "firebase_url": "https://storeapp-56f38-default-rtdb.firebaseio.com",
+    "project_id": "storeapp-56f38",
+    "storage_bucket": "storeapp-56f38.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204008202821:android:e9b2600a8f82742cdff92c",
+        "android_client_info": {
+          "package_name": "co.edu.unab.damo.ltor.storeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxPweQBfM6QZkzMcxqb-uPEP3FIJLwEy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204008202821:android:aa95852d18f2269ddff92c",
+        "android_client_info": {
+          "package_name": "co.edu.unab.damo.ltortiz.storeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxPweQBfM6QZkzMcxqb-uPEP3FIJLwEy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

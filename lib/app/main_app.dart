@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storeapp/app/home/presentation/pages/home_page.dart';
-import 'package:storeapp/app/login/presentation/pages/login_page.dart';
-import 'package:storeapp/app/signup/presentation/pages/signup_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:storeapp/app/core/presentation/theme/app_theme.dart';
+import 'package:storeapp/app/features/home/presentation/pages/home_page.dart';
+import 'package:storeapp/app/form_product/presentation/pages/form_product_page.dart';
+import 'package:storeapp/app/features/login/presentation/pages/login_page.dart';
+import 'package:storeapp/app/features/signup/presentation/pages/signup_page.dart';
+import 'package:storeapp/app/features/products/presentation/pages/products_page.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -10,8 +15,22 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = GoRouter(
+      initialLocation: "/home",
       routes: [
-        GoRoute(path: "/", builder: (_, _) => LoginPage(), name: "login"),
+        GoRoute(
+          path: "/login",
+          builder: (_, _) => LoginPage(),
+          name: "login",
+          redirect: (context, state) async {
+            final prefs = await SharedPreferences.getInstance();
+            final bool authenticated = prefs.getBool("login") ?? false;
+            User? user = FirebaseAuth.instance.currentUser;
+            if (authenticated || user != null) {
+              return "/home";
+            }
+            return null;
+          },
+        ),
         GoRoute(
           path: "/sign-up",
           builder: (_, _) => SignUpPage(),
@@ -21,10 +40,49 @@ class MainApp extends StatelessWidget {
           path: "/home",
           builder: (_, _) => HomePage(),
           name: "home",
+          redirect: (context, state) async {
+            final prefs = await SharedPreferences.getInstance();
+            final bool authenticated = prefs.getBool("login") ?? false;
+            User? user = FirebaseAuth.instance.currentUser;
+            if (!authenticated || user == null) {
+              return "/login";
+            }
+            return null;
+          },
         ),
-        
+        GoRoute(
+          path: "/products",
+          builder: (_, _) => ProductsPage(),
+          name: "products",
+          redirect: (context, state) async {
+            final prefs = await SharedPreferences.getInstance();
+            final bool authenticated = prefs.getBool("login") ?? false;
+            User? user = FirebaseAuth.instance.currentUser;
+            if (!authenticated || user == null) {
+              return "/login";
+            }
+            return null;
+          },
+        ),
+        GoRoute(
+          path: "/form-product",
+          builder: (_, _) => FormProductPage(),
+          name: "form-product",
+        ),
+        GoRoute(
+          path: "/form-product/:id",
+          builder:
+              (_, state) => FormProductPage(id: state.pathParameters["id"]),
+          name: "form-product-u",
+        ),
       ],
     );
-    return SafeArea(child: MaterialApp.router(routerConfig: router));
+    return SafeArea(
+      child: MaterialApp.router(
+        theme: AppTheme.lightTheme,
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+      ),
+    );
   }
 }

@@ -60,11 +60,15 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     SubmitEvent event,
     Emitter<SignupState> emit,
   ) async {
-    final bool result = await signupUseCase.invoke(state.model);
-    late final newState;
-    if (result) {
-      newState = SubmitSuccessState(model: state.model);
-    } else {
+    late final SignupState newState;
+    try {
+      final bool result = await signupUseCase.invoke(state.model);
+      if (result) {
+        newState = SubmitSuccessState(model: state.model);
+      } else {
+        throw (Exception());
+      }
+    } catch (e) {
       newState = SubmitErrorState(
         model: state.model,
         message: "Error al registrar el usuario",

@@ -8,7 +8,6 @@ sealed class SignupState {
 
 final class InitialState extends SignupState {
   InitialState()
-    // : super(model: LoginFormModel(email: "a@a.com", password: "12345678"));
     : super(
         model: SignupFormModel(
           id: "",

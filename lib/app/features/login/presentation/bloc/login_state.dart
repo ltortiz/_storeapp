@@ -7,9 +7,7 @@ sealed class LoginState {
 }
 
 final class InitialState extends LoginState {
-  InitialState()
-    // : super(model: LoginFormModel(email: "a@a.com", password: "12345678"));
-    : super(model: LoginFormModel(email: "", password: ""));
+  InitialState() : super(model: LoginFormModel(email: "", password: ""));
 }
 
 final class DataUpdateState extends LoginState {

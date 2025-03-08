@@ -1,5 +1,5 @@
 import 'package:storeapp/app/core/data/remote/dto/product_data_model.dart';
-import 'package:storeapp/app/form_product/presentation/model/product_form_model.dart';
+import 'package:storeapp/app/features/form_product/presentation/model/product_form_model.dart';
 import 'package:storeapp/app/features/products/presentation/model/product_model.dart';
 
 class ProductEntity {

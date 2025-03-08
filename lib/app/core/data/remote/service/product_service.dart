@@ -3,7 +3,6 @@ import 'package:storeapp/app/core/data/remote/dto/product_data_model.dart';
 
 final class ProductService {
   final Dio dio;
-  // final String _baseUrl = "https://storeappdamo2024-default-rtdb.firebaseio.com/";
   final String _baseUrl = "https://storeapp-56f38-default-rtdb.firebaseio.com/";
 
   ProductService({required this.dio});

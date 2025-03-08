@@ -1,6 +1,5 @@
 mixin LoginMixin {
   String? validatePassword(value) {
-    // value = value ?? "";
     value ??= "";
     value = value.trim();
     if (value.isEmpty) {

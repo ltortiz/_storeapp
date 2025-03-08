@@ -25,13 +25,5 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e) {
       throw (Exception(e));
     }
-    // return [
-    //   ProductEntity(
-    //     id: "1",
-    //     name: "Teclado",
-    //     image: "https://cdn-icons-png.flaticon.com/512/2527/2527693.png",
-    //     price: 100,
-    //   ),
-    // ];
   }
 }

@@ -32,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _submitEvent(SubmitEvent event, Emitter<LoginState> emit) async {
     final bool result = await loginUseCase.invoke(state.model);
     print(result ? "Inicio!!!!" : "No inicio :(");
-    late final newState;
+    late final LoginState newState;
     if (result) {
       newState = LoginSuccessState(model: state.model);
     } else {

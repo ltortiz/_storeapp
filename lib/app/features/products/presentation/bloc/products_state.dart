@@ -20,11 +20,7 @@ final class LoadDataState extends ProductsState {
   LoadDataState({required super.model});
 }
 
-final class HomeErrorState extends ProductsState {
+final class ProductsErrorState extends ProductsState {
   final String message;
-  HomeErrorState({required super.model, required this.message});
-}
-
-final class LogoutState extends ProductsState {
-  LogoutState() : super(model: ProductsModel(products: []));
+  ProductsErrorState({required super.model, required this.message});
 }

@@ -9,16 +9,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-
     return AppBar(
       title: Text(title, style: Theme.of(context).textTheme.headlineLarge),
       backgroundColor: AppTheme.primaryColor,
       actions: [
-        Container(
-          margin: EdgeInsets.only(right: 12.0),
+        InkWell(
+          onTap: () => context.pushNamed("profile"),
           child: Icon(Icons.account_circle, size: 32.0, color: Colors.black),
         ),
+        SizedBox(width: 16.0),
         // PopupMenuButton<String>(
         //   onSelected: (value) {
         //     if (value == 'logout') {

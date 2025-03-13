@@ -1,5 +1,4 @@
 import 'package:storeapp/app/core/domain/entity/product_entity.dart';
-import 'package:storeapp/app/features/form_product/domain/entity/form_product_entity.dart';
 
 final class ProductFormModel {
   final String id;

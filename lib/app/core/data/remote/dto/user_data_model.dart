@@ -1,4 +1,3 @@
-import 'package:storeapp/app/core/domain/entity/product_entity.dart';
 import 'package:storeapp/app/core/domain/entity/user_entity.dart';
 import 'package:storeapp/app/features/profile/presentation/model/profile_model.dart';
 

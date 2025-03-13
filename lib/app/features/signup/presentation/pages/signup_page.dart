@@ -240,13 +240,11 @@ class _BodySignUpWidgetState extends State<BodySignUpWidget> with SignupMixin {
                             child: FilledButton(
                               onPressed:
                                   isValidForm
-                                      ? () {
-                                        bloc.add(SubmitEvent());
-                                      }
+                                      ? () => bloc.add(SubmitEvent())
                                       : null,
                               style: FilledButton.styleFrom(
                                 disabledBackgroundColor: AppTheme.primaryColor
-                                    .withOpacity(0.5),
+                                    .withOpacity(0.3),
                                 disabledForegroundColor: Colors.white70,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,

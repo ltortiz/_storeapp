@@ -107,24 +107,24 @@ class ProfileWidget extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Divider(height: 16),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.verified_user,
-                                    color: AppTheme.iconColor,
-                                  ),
-                                  SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      state.model.id,
-                                      style: TextStyle(
-                                        color: AppTheme.textColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Divider(height: 16),
+                              // Row(
+                              //   children: [
+                              //     Icon(
+                              //       Icons.verified_user,
+                              //       color: AppTheme.iconColor,
+                              //     ),
+                              //     SizedBox(width: 12),
+                              //     Expanded(
+                              //       child: Text(
+                              //         state.model.id,
+                              //         style: TextStyle(
+                              //           color: AppTheme.textColor,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

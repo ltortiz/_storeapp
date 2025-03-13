@@ -46,7 +46,7 @@ class FooterLoginWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Aún no tiene cuenta?",
+                "Aún no tienes cuenta?",
                 style: Theme.of(
                   context,
                 ).textTheme.bodySmall?.copyWith(color: AppTheme.textColor),
@@ -190,7 +190,7 @@ class _BodyLoginWidgetState extends State<BodyLoginWidget> with LoginMixin {
                             isValidForm ? () => bloc.add(SubmitEvent()) : null,
                         style: FilledButton.styleFrom(
                           disabledBackgroundColor: AppTheme.primaryColor
-                              .withOpacity(0.5),
+                              .withOpacity(0.3),
                           disabledForegroundColor: Colors.white70,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(

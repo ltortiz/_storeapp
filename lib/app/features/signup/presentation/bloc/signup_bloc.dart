@@ -71,7 +71,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     } catch (e) {
       newState = SubmitErrorState(
         model: state.model,
-        message: "Error al registrar el usuario",
+        message: "Error al registrar el usuario. (${e.toString()})",
       );
     }
     emit(newState);

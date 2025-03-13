@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storeapp/app/core/presentation/theme/app_theme.dart';
+import 'package:storeapp/app/core/presentation/widgets/custom_app_bar.dart';
+import 'package:storeapp/app/core/presentation/widgets/custom_dialog.dart';
 import 'package:storeapp/app/di/dependency_injection.dart';
 import 'package:storeapp/app/features/form_product/presentation/bloc/form_product_bloc.dart';
 import 'package:storeapp/app/features/form_product/presentation/bloc/form_product_event.dart';
@@ -17,13 +20,8 @@ class FormProductPage extends StatelessWidget {
       value: DependencyInjection.serviceLocator.get<FormProductBloc>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          toolbarTextStyle: TextStyle(color: Colors.white),
-          title: Text(
-            id == null ? "Agregar Producto" : "Actualizar Producto",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.purple,
+        appBar: CustomAppBar(
+          id == null ? "Agregar Producto" : "Actualizar Producto",
         ),
         body: Column(children: [BodyFormProductWidget(id: id)]),
       ),
@@ -64,30 +62,11 @@ class _BodyFormProductWidgetState extends State<BodyFormProductWidget>
             GoRouter.of(context).pop();
             break;
           case SubmitErrorState():
-            showDialog<void>(
+            CustomDialog.show(
               context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("Error!!"),
-                  titleTextStyle: TextStyle(
-                    color: Colors.red,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  content: Text(state.message),
-                  actions: [
-                    FilledButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                      ),
-                      child: Text("Cerrar"),
-                    ),
-                  ],
-                );
-              },
+              title: "Error!!",
+              message: state.message,
             );
-            print("No inicioooo :(");
             break;
         }
       },
@@ -113,10 +92,19 @@ class _BodyFormProductWidgetState extends State<BodyFormProductWidget>
                           (value) => bloc.add(NameChangedEvent(name: value)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: validateName,
+                      style: TextStyle(color: AppTheme.textColor),
                       decoration: InputDecoration(
                         labelText: "Nombre",
-                        icon: Icon(Icons.card_giftcard),
+                        icon: Icon(
+                          Icons.card_giftcard,
+                          color: AppTheme.iconColor,
+                        ),
                         hintText: "Escriba el nombre del producto",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        filled: true,
+                        fillColor: AppTheme.inputBackgroundColor,
                       ),
                       keyboardType: TextInputType.name,
                     ),
@@ -127,10 +115,19 @@ class _BodyFormProductWidgetState extends State<BodyFormProductWidget>
                           (value) => bloc.add(PriceChangedEvent(price: value)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: validatePrice,
+                      style: TextStyle(color: AppTheme.textColor),
                       decoration: InputDecoration(
                         labelText: "Precio",
-                        icon: Icon(Icons.attach_money),
+                        icon: Icon(
+                          Icons.attach_money,
+                          color: AppTheme.iconColor,
+                        ),
                         hintText: "Escriba el precio del producto",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        filled: true,
+                        fillColor: AppTheme.inputBackgroundColor,
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -142,10 +139,16 @@ class _BodyFormProductWidgetState extends State<BodyFormProductWidget>
                               bloc.add(UrlImageChangedEvent(urlImage: value)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: validateImage,
+                      style: TextStyle(color: AppTheme.textColor),
                       decoration: InputDecoration(
                         labelText: "Imagen",
-                        icon: Icon(Icons.image),
+                        icon: Icon(Icons.image, color: AppTheme.iconColor),
                         hintText: "Escriba la url de la imange del producto",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        filled: true,
+                        fillColor: AppTheme.inputBackgroundColor,
                       ),
                       keyboardType: TextInputType.url,
                     ),
@@ -175,11 +178,26 @@ class _BodyFormProductWidgetState extends State<BodyFormProductWidget>
                     FilledButton(
                       onPressed:
                           isValidForm ? () => bloc.add(SubmitEvent()) : null,
+                      style: FilledButton.styleFrom(
+                        disabledBackgroundColor: AppTheme.primaryColor
+                            .withOpacity(0.3),
+                        disabledForegroundColor: Colors.white70,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                       child: SizedBox(
                         width: double.infinity,
                         child: Text(
                           widget.id == null ? "Crear" : "Actualizar",
                           textAlign: TextAlign.center,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

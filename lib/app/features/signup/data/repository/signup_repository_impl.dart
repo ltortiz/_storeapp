@@ -22,8 +22,17 @@ class SignupRepositoryImpl implements SignupRepository {
           signupEntity.toUserDataModel(userCredential.user!.uid),
         );
       }
+    } on FirebaseAuthException catch (e) {
+      final errores = {
+        "email-already-in-use": "El correo electrónico ya está en uso",
+        "invalid-email": "El correo electrónico no es válido",
+        "operation-not-allowed":
+            "No se encuentran habilitadas las cuentas correo/contraseña",
+        "weak-password": "La contraseña no es lo suficientemente fuerte",
+      };
+      throw Exception(errores[e.code] ?? "Error de Firebase: ${e.message}");
     } catch (e) {
-      throw Exception("Error: $e");
+      throw Exception("Error: ${e.toString()}");
     }
     return true;
   }
